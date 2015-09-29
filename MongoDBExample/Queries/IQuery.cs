@@ -8,6 +8,6 @@ namespace MongoDBExample.Queries
 {
     public interface IQuery<TOne, TTwo>
     {
-        TTwo Query(TOne queryInput);
+        TTwo CreateFilterQuery(TOne queryInput);
     }
 }

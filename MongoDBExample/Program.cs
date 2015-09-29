@@ -16,14 +16,15 @@ namespace MongoDBExample
         static void Main(string[] args)
         {
             string databaseName = "test";
+            string document = "poker";
 
             var dbConnection = new MongoConnection();
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            var mongoQuery = new MongoRepository(mongoDatabase).GetById("1");
+            var mongoQuery = new MongoRepository(mongoDatabase, document).GetById("1");
 
-            Console.WriteLine(mongoQuery.Result.ToList<BsonDocument>());
+            Console.WriteLine(mongoQuery.Result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
         }
 

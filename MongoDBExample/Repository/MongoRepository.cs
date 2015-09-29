@@ -9,34 +9,40 @@ using MongoDB.Driver;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository : IRepository<Task<IEnumerable<BsonDocument>>, string, string, string>
+    public class MongoRepository : IRepository<Task<IEnumerable<BsonDocument>>, string, Dictionary<string, string>>
     {
         private IMongoDatabase mongoDatabase;
+        private string document;
 
-        public MongoRepository(IMongoDatabase mongoDatabase)
+        public MongoRepository(IMongoDatabase mongoDatabase, string document)
         {
             this.mongoDatabase = mongoDatabase;
+            this.document = document;
         }
 
         public Task<IEnumerable<BsonDocument>> GetById(string id)
         {
-            var mongoQuery = this.MongoQuery(this.mongoDatabase);
+            Dictionary<string, string> filterParams = new Dictionary<string, string>();
+            filterParams.Add("_id", id);
+            var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
+            var mongoQuery = this.MongoQuery(filterQuery);
             Task.WaitAll(mongoQuery);
             return mongoQuery;
         }
 
-        //public IEnumerable<BsonDocument> GetFiltered(IQuery<string, string> query)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public Task<IEnumerable<BsonDocument>> GetFiltered(Dictionary<string, string> filterParams)
+        {
+            var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
+            var mongoQuery = this.MongoQuery(filterQuery);
+            Task.WaitAll(mongoQuery);
+            return mongoQuery;
+        }
 
-
-        private async Task<IEnumerable<BsonDocument>> MongoQuery(IMongoDatabase mongoDatabase)
+        private async Task<IEnumerable<BsonDocument>> MongoQuery(FilterDefinition<BsonDocument> filter)
         {
             IEnumerable<BsonDocument> batch = new List<BsonDocument>();
+            var collection = this.mongoDatabase.GetCollection<BsonDocument>(this.document);
 
-            var collection = mongoDatabase.GetCollection<BsonDocument>("poker");
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", "1");
 
             using (var cursor = await collection.FindAsync(filter))
             {

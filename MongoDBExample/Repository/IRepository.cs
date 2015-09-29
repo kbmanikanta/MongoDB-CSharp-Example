@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Repository
 {
-    public interface IRepository<TOne, TTwo, TThree, TFour>
+    public interface IRepository<TOne, TTwo, TThree>
     {
         TOne GetById(TTwo id);
-        //IEnumerable<TOne> GetFiltered(IQuery<TThree, TFour> query);
+        TOne GetFiltered(TThree query);
     }
 }
