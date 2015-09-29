@@ -12,8 +12,10 @@ namespace MongoDBExample.Queries
     {
         public FilterDefinition<BsonDocument> CreateFilterQuery(Dictionary<string, string> filterParams)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", "1");
-            return filter;
+            var filter = Builders<BsonDocument>.Filter;
+            var filterDefinition =  filter.Eq("_id", "1") & filter.Eq("name", "Prueba test");
+
+            return filterDefinition;
         }
     }
 }

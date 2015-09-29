@@ -43,7 +43,6 @@ namespace MongoDBExample.Repository
             IEnumerable<BsonDocument> batch = new List<BsonDocument>();
             var collection = this.mongoDatabase.GetCollection<BsonDocument>(this.document);
 
-
             using (var cursor = await collection.FindAsync(filter))
             {
                 while (await cursor.MoveNextAsync())

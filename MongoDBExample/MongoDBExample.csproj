@@ -70,7 +70,6 @@
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\MongoQuery.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\Repo.cs" />
     <Compile Include="Repository\MongoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
