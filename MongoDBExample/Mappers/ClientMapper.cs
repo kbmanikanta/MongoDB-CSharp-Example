@@ -1,4 +1,5 @@
-﻿using MongoDBExample.Models;
+﻿using MongoDB.Bson;
+using MongoDBExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,20 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Mappers
 {
-    public class ClientMapper : IMapper<string, Client>
+    public class ClientMapper : IMapper<Client, BsonDocument>
     {
-        public Client Mapper(string origen)
+        public BsonDocument Mapper(Client destino)
         {
-            return new Client(88, origen);
+            return new BsonDocument {
+                { "address" , "prueba" }
+            };
         }
+
+        public Client Mapper(BsonDocument origen)
+        {
+            return new Client(88, "Jose");
+        }
+
+
     }
 }

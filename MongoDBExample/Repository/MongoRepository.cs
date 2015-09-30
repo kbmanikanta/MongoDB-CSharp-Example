@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MongoDBExample.Queries;
 using MongoDB.Driver;
 using MongoDBExample.Models;
+using MongoDBExample.Mappers;
 
 namespace MongoDBExample.Repository
 {
@@ -14,12 +15,13 @@ namespace MongoDBExample.Repository
     {
         private IMongoDatabase mongoDatabase;
         private string document;
+        private IMapper<T, BsonDocument> mapper;
 
-        public MongoRepository(IMongoDatabase mongoDatabase, string document)
+        public MongoRepository(IMongoDatabase mongoDatabase, string document, IMapper<T, BsonDocument> mapper)
         {
             this.mongoDatabase = mongoDatabase;
             this.document = document;
-            
+            this.mapper = mapper;
         }
 
         public Task<IEnumerable<BsonDocument>> GetById(string id)
@@ -60,8 +62,19 @@ namespace MongoDBExample.Repository
             return batch;
         }
 
+        private async Task<bool> MongoInsert(BsonDocument currentDocument)
+        {
+            var collection = this.mongoDatabase.GetCollection<BsonDocument>(this.document);
+            await collection.InsertOneAsync(currentDocument);
+
+            return true;
+        }
+
         public bool Create(T recurse)
         {
+            BsonDocument bsonRecurse = this.mapper.Mapper(recurse);
+            var mongoInsertVal = this.MongoInsert(bsonRecurse);
+            Task.WaitAll(mongoInsertVal);
             return false;
         }
     }

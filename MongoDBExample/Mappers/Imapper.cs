@@ -9,5 +9,6 @@ namespace MongoDBExample.Mappers
     public interface IMapper<TOrigen, TDestino>
     {
         TDestino Mapper(TOrigen origen);
+        TOrigen Mapper(TDestino destino);
     }
 }

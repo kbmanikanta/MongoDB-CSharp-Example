@@ -10,6 +10,7 @@ using FluentAssertions;
 using MongoDBExample.Repository;
 using MongoDBExample.Models;
 using MongoDBExample.Factories;
+using MongoDBExample.Mappers;
 
 namespace MongoDBExample
 {
@@ -25,13 +26,15 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
+            IMapper<Client, BsonDocument > mapper = new ClientMapper();
+
             //Get Repository
-            var usersRepository = MongoRepositoryFactory<Client>.Create(mongoDatabase, document);
+            var clientsRepository = MongoRepositoryFactory<Client>.Create(mongoDatabase, document, mapper);
 
             //Queries
 
             //First query: GetById
-            var resultGetById = usersRepository.GetById("1");
+            var resultGetById = clientsRepository.GetById("1");
             Console.WriteLine(resultGetById.Result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
 
@@ -40,8 +43,12 @@ namespace MongoDBExample
             queryGetFiltered.Add(new QueryInfo("_id", "1", "$eq"));
             queryGetFiltered.Add(new QueryInfo("name", "Prueba test", "$eq"));
 
-            var resultGetFiltered = usersRepository.GetFiltered(queryGetFiltered);
+            var resultGetFiltered = clientsRepository.GetFiltered(queryGetFiltered);
             Console.WriteLine(resultGetFiltered.Result.ToList<BsonDocument>().ToJson());
+
+            //Third query: Insert
+            var client = new Client(2, "Jose");
+            clientsRepository.Create(client);
 
             Console.ReadLine();
         }
