@@ -26,13 +26,13 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //Get Repository
-            var mongoRepository = MongoRepositoryFactory.Create(mongoDatabase, document);
+            var mongoRepository = new MongoRepository<QueryInfo>(mongoDatabase, document);
 
             //Queries
 
             //First query: GetById
-            var result = mongoRepository.GetById("1").Result;
-            Console.WriteLine(result.ToList<BsonDocument>().ToJson());
+            var resultGetById = mongoRepository.GetById("1");
+            Console.WriteLine(resultGetById.Result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
 
             //Second query: GetFiltered
