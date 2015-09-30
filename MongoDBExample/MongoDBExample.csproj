@@ -66,6 +66,7 @@
     <Compile Include="DBConnection\IDBConnection.cs" />
     <Compile Include="DBConnection\MongoConnection.cs" />
     <Compile Include="Factories\MongoRepositoryFactory.cs" />
+    <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\IQuery.cs" />
