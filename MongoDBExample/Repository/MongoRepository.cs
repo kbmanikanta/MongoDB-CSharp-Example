@@ -19,10 +19,12 @@ namespace MongoDBExample.Repository
         {
             this.mongoDatabase = mongoDatabase;
             this.document = document;
+            
         }
 
         public Task<IEnumerable<BsonDocument>> GetById(string id)
         {
+          
 
             var filterParam = new QueryInfo("_id", id, "$eq");
             IList<QueryInfo> filterParams = new List<QueryInfo>() { filterParam };
