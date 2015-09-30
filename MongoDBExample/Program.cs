@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using FluentAssertions;
 using MongoDBExample.Repository;
+using MongoDBExample.Factories;
 
 namespace MongoDBExample
 {
@@ -22,11 +23,10 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            var monoRepository = new MongoRepository(mongoDatabase, document).GetById("1");
+            var mongoRepository = MongoRepositoryFactory.Create(mongoDatabase, document);
+            var result = mongoRepository.GetById("1").Result;
 
-
-
-            Console.WriteLine(monoRepository.Result.ToList<BsonDocument>().ToJson());
+            Console.WriteLine(result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
         }
 
