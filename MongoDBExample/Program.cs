@@ -25,7 +25,7 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //Get Repository
-            var mongoRepository = new MongoRepository(mongoDatabase, document);
+            var mongoRepository = new MongoRepository<QueryInfo>(mongoDatabase, document);
 
 
             //Queries

@@ -12,7 +12,7 @@ namespace MongoDBExample.Models
         {
             this.Key = key;
             this.Value = value;
-            this.QueryOperator = queryOperator;
+            this.QueryOperator = queryOperator; 
         }
 
         public string Key;
