@@ -26,15 +26,13 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            IMapper<Client, BsonDocument > mapper = new ClientMapper();
-
             //Get Repository
-            var clientsRepository = MongoRepositoryFactory<Client>.Create(mongoDatabase, document, mapper);
+            var clientsRepository = MongoRepositoryFactory<Client>.Create(mongoDatabase, document);
 
             //Queries
             //Third query: Insert
-            var client = new Client("91", "Ahora si");
-            clientsRepository.Create(client);
+            //var client = new Client("91", "Ahora si");
+            //clientsRepository.Create(client);
 
             //First query: GetById
             var resultGetById = clientsRepository.GetById("91");

@@ -43,6 +43,14 @@ namespace MongoDBExample.Repository
             return mongoQuery;
         }
 
+        public bool Create(T recurse)
+        {
+            BsonDocument bsonRecurse = this.mapper.Mapper(recurse);
+            var mongoInsertVal = this.MongoInsert(bsonRecurse);
+            Task.WaitAll(mongoInsertVal);
+            return false;
+        }
+
         private async Task<IEnumerable<BsonDocument>> MongoQuery(BsonDocument filter)
         {
             IEnumerable<BsonDocument> batch = new List<BsonDocument>();
@@ -68,12 +76,6 @@ namespace MongoDBExample.Repository
             return true;
         }
 
-        public bool Create(T recurse)
-        {
-            BsonDocument bsonRecurse = this.mapper.Mapper(recurse);
-            var mongoInsertVal = this.MongoInsert(bsonRecurse);
-            Task.WaitAll(mongoInsertVal);
-            return false;
-        }
+        
     }
 }
