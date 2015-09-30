@@ -11,6 +11,7 @@ using MongoDBExample.Repository;
 using MongoDBExample.Models;
 using MongoDBExample.Factories;
 using MongoDBExample.Mappers;
+using MongoDBExample.Business;
 
 namespace MongoDBExample
 {
@@ -26,29 +27,29 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            //Get Repository
-            var clientsRepository = MongoRepositoryFactory<Client>.Create(mongoDatabase, document);
+            //ClientBL
+            var clientBLInstance = new ClientBL(mongoDatabase, document);
 
-            //Queries
-            //Third query: Insert
-            //var client = new Client("91", "Ahora si");
-            //clientsRepository.Create(client);
+            //Creation
+            var client = new Client("52", "test");
 
-            //First query: GetById
-            var resultGetById = clientsRepository.GetById("91");
-            Console.WriteLine(resultGetById.Result.ToList<BsonDocument>().ToJson());
-            var clientBsonDocument = resultGetById.Result.ToList<BsonDocument>().First();
-            var obtainedClient = mapper.Mapper(clientBsonDocument);
+            //Insert
+            clientBLInstance.Create(client);
+
+            //GetById
+            var obtainedClient = clientBLInstance.GetById(client.Id);
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
             Console.ReadLine();
 
-            //Second query: GetFiltered
-            IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
-            queryGetFiltered.Add(new QueryInfo("_id", "85", "$eq"));
-            queryGetFiltered.Add(new QueryInfo("name", "Prueba test", "$eq"));
 
-            var resultGetFiltered = clientsRepository.GetFiltered(queryGetFiltered);
-            Console.WriteLine(resultGetFiltered.Result.ToList<BsonDocument>().ToJson());
+
+            //Second query: GetFiltered
+            //IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
+            //queryGetFiltered.Add(new QueryInfo("_id", "85", "$eq"));
+            //queryGetFiltered.Add(new QueryInfo("name", "Prueba test", "$eq"));
+
+            //var resultGetFiltered = clientsRepository.GetFiltered(queryGetFiltered);
+            //Console.WriteLine(resultGetFiltered.Result.ToList<BsonDocument>().ToJson());
 
 
 
