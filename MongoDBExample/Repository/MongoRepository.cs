@@ -24,7 +24,7 @@ namespace MongoDBExample.Repository
         public Task<IEnumerable<BsonDocument>> GetById(string id)
         {
 
-            var filterParam = new QueryInfo("_id", "id", "$eq");
+            var filterParam = new QueryInfo("_id", id, "$eq");
             IList<QueryInfo> filterParams = new List<QueryInfo>() { filterParam };
 
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);

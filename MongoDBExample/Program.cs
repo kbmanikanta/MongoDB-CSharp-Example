@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using FluentAssertions;
 using MongoDBExample.Repository;
+using MongoDBExample.Models;
 
 namespace MongoDBExample
 {
@@ -22,11 +23,20 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            var monoRepository = new MongoRepository(mongoDatabase, document).GetById("1");
+            var mongoRepository = new MongoRepository(mongoDatabase, document);
 
 
+            var resultGetById = mongoRepository.GetById("1");
+            Console.WriteLine(resultGetById.Result.ToList<BsonDocument>().ToJson());
+            Console.ReadLine();
 
-            Console.WriteLine(monoRepository.Result.ToList<BsonDocument>().ToJson());
+            IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
+            queryGetFiltered.Add(new QueryInfo("_id", "1", "$eq"));
+            queryGetFiltered.Add(new QueryInfo("name", "Prueba test", "$eq"));
+
+            var resultGetFiltered = mongoRepository.GetFiltered(queryGetFiltered);
+            Console.WriteLine(resultGetFiltered.Result.ToList<BsonDocument>().ToJson());
+
             Console.ReadLine();
         }
 
