@@ -26,12 +26,12 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //Get Repository
-            var mongoRepository = new MongoRepository<QueryInfo>(mongoDatabase, document);
+            var usersRepository = new MongoRepository<Client>(mongoDatabase, document);
 
             //Queries
 
             //First query: GetById
-            var resultGetById = mongoRepository.GetById("1");
+            var resultGetById = usersRepository.GetById("1");
             Console.WriteLine(resultGetById.Result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
 
@@ -40,7 +40,7 @@ namespace MongoDBExample
             queryGetFiltered.Add(new QueryInfo("_id", "1", "$eq"));
             queryGetFiltered.Add(new QueryInfo("name", "Prueba test", "$eq"));
 
-            var resultGetFiltered = mongoRepository.GetFiltered(queryGetFiltered);
+            var resultGetFiltered = usersRepository.GetFiltered(queryGetFiltered);
             Console.WriteLine(resultGetFiltered.Result.ToList<BsonDocument>().ToJson());
 
             Console.ReadLine();
