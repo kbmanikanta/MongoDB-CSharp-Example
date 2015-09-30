@@ -66,6 +66,8 @@
     <Compile Include="DBConnection\IDBConnection.cs" />
     <Compile Include="DBConnection\MongoConnection.cs" />
     <Compile Include="Factories\MongoRepositoryFactory.cs" />
+    <Compile Include="Mappers\ClientMapper.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Program.cs" />
@@ -79,6 +81,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
