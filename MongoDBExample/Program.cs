@@ -22,9 +22,11 @@ namespace MongoDBExample
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
-            var mongoQuery = new MongoRepository(mongoDatabase, document).GetById("1");
+            var monoRepository = new MongoRepository(mongoDatabase, document).GetById("1");
 
-            Console.WriteLine(mongoQuery.Result.ToList<BsonDocument>().ToJson());
+
+
+            Console.WriteLine(monoRepository.Result.ToList<BsonDocument>().ToJson());
             Console.ReadLine();
         }
 
