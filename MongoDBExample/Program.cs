@@ -41,8 +41,8 @@ namespace MongoDBExample
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
             Console.ReadLine();
 
-
-
+            
+            //
             //Second query: GetFiltered
             //IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
             //queryGetFiltered.Add(new QueryInfo("_id", "85", "$eq"));
