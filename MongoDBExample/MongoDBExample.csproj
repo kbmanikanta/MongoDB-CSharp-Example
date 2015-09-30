@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ClientBL.cs" />
+    <Compile Include="Business\IBL.cs" />
     <Compile Include="DBConnection\IDBConnection.cs" />
     <Compile Include="DBConnection\MongoConnection.cs" />
     <Compile Include="Factories\MongoRepositoryFactory.cs" />
