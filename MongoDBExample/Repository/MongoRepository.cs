@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository : IRepository<Task<IEnumerable<BsonDocument>>, string, Dictionary<string, string>>
+    public class MongoRepository<T> : IRepository<Task<IEnumerable<BsonDocument>>, string, IList<QueryInfo>, T>
     {
         private IMongoDatabase mongoDatabase;
         private string document;
@@ -22,15 +22,17 @@ namespace MongoDBExample.Repository
 
         public Task<IEnumerable<BsonDocument>> GetById(string id)
         {
-            Dictionary<string, string> filterParams = new Dictionary<string, string>();
-            filterParams.Add("_id", id);
+
+            var filterParam = new QueryInfo("_id", id, "$eq");
+            IList<QueryInfo> filterParams = new List<QueryInfo>() { filterParam };
+
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
             Task.WaitAll(mongoQuery);
             return mongoQuery;
         }
 
-        public Task<IEnumerable<BsonDocument>> GetFiltered(Dictionary<string, string> filterParams)
+        public Task<IEnumerable<BsonDocument>> GetFiltered(IList<QueryInfo> filterParams)
         {
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
@@ -43,8 +45,6 @@ namespace MongoDBExample.Repository
             IEnumerable<BsonDocument> batch = new List<BsonDocument>();
             var collection = this.mongoDatabase.GetCollection<BsonDocument>(this.document);
 
-            
-
             using (var cursor = await collection.FindAsync(filter))
             {
                 while (await cursor.MoveNextAsync())
@@ -55,6 +55,11 @@ namespace MongoDBExample.Repository
             }
 
             return batch;
+        }
+
+        public bool Create(T recurse)
+        {
+            return false;
         }
     }
 }
