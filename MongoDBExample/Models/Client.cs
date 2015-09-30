@@ -8,13 +8,13 @@ namespace MongoDBExample.Models
 {
     public class Client
     {
-        public Client(int id, string name)
+        public Client(string id, string name)
         {
             this.Id = id;
             this.Name = name;
         }
 
-        public int Id;
+        public string Id;
         public string Name;
     }
 }

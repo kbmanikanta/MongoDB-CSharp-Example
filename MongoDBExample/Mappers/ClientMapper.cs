@@ -10,16 +10,17 @@ namespace MongoDBExample.Mappers
 {
     public class ClientMapper : IMapper<Client, BsonDocument>
     {
-        public BsonDocument Mapper(Client destino)
+        public BsonDocument Mapper(Client origen)
         {
             return new BsonDocument {
-                { "address" , "prueba" }
+                { "_id" , origen.Id },
+                { "name" , origen.Name }
             };
         }
 
         public Client Mapper(BsonDocument origen)
         {
-            return new Client(88, "Jose");
+            return new Client(origen["_id"].AsString, origen["name"].AsString);
         }
 
 
