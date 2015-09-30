@@ -38,10 +38,12 @@ namespace MongoDBExample.Repository
             return mongoQuery;
         }
 
-        private async Task<IEnumerable<BsonDocument>> MongoQuery(FilterDefinition<BsonDocument> filter)
+        private async Task<IEnumerable<BsonDocument>> MongoQuery(BsonDocument filter)
         {
             IEnumerable<BsonDocument> batch = new List<BsonDocument>();
             var collection = this.mongoDatabase.GetCollection<BsonDocument>(this.document);
+
+            
 
             using (var cursor = await collection.FindAsync(filter))
             {
