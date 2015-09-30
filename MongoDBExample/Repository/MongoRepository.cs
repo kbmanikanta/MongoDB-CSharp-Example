@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDBExample.Queries;
 using MongoDB.Driver;
-using MongoDBExample.Models;
 
 namespace MongoDBExample.Repository
 {

@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDBExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +8,17 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Queries
 {
-    public class MongoQuery : IQuery<IList<QueryInfo>, BsonDocument>
+    public class MongoQuery : IQuery<Dictionary<string, string>, BsonDocument>
     {
-        public BsonDocument CreateFilterQuery(IList<QueryInfo> filterParams)
+        public BsonDocument CreateFilterQuery(Dictionary<string, string> filterParams)
         {
-            var filter = new BsonDocument();
 
-            foreach (var item in filterParams)
-            {
-                var newFilter = new BsonDocument(item.Key, new BsonDocument(item.QueryOperator, item.Value));
-                filter.AddRange(newFilter);
-            }
+            var filterr = new BsonDocument("_id", new BsonDocument("$eq", "1"));
+            var filter2 = new BsonDocument("name", new BsonDocument("$eq", "Prueba test"));
 
-            return filter;
+            filterr.AddRange(filter2);
+
+            return filterr;
         }
     }
 }

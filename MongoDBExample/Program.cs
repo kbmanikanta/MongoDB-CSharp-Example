@@ -9,6 +9,7 @@ using MongoDB.Bson;
 using FluentAssertions;
 using MongoDBExample.Repository;
 using MongoDBExample.Models;
+using MongoDBExample.Factories;
 
 namespace MongoDBExample
 {
@@ -26,7 +27,6 @@ namespace MongoDBExample
 
             //Get Repository
             var mongoRepository = new MongoRepository<QueryInfo>(mongoDatabase, document);
-
 
             //Queries
 
