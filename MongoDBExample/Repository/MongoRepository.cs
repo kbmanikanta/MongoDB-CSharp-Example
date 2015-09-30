@@ -10,7 +10,7 @@ using MongoDBExample.Models;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository : IRepository<Task<IEnumerable<BsonDocument>>, string, IList<QueryInfo>>
+    public class MongoRepository<T> : IRepository<Task<IEnumerable<BsonDocument>>, string, IList<QueryInfo>, T>
     {
         private IMongoDatabase mongoDatabase;
         private string document;
@@ -56,6 +56,11 @@ namespace MongoDBExample.Repository
             }
 
             return batch;
+        }
+
+        public bool Create(T recurse)
+        {
+            return false;
         }
     }
 }
