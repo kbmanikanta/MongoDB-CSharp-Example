@@ -46,11 +46,15 @@ namespace MongoDBExample.Business
 
         public IEnumerable<T> GetFiltered(IList<QueryInfo> query)
         {
-            //var result = this.repository.GetFiltered(query);
-            //result.Result.ToList<BsonDocument>().Where(x => x === x.name)
-            var clients = new T[2];
+            var result = this.repository.GetFiltered(query);
+            IEnumerable<BsonDocument> resultInList = result.Result.ToList();
+            IList<T> entityList = new List<T>();
+            foreach (var item in resultInList)
+            {
+                entityList.Add(this.mapper.Mapper(item));
+            }
 
-            return clients;
+            return entityList;
         }
     }
 }
