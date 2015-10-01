@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Queries
 {
-    public interface IQuery<TListTFilterQuery, TDBFormat>
+    public interface IQuery<TListFilterQuery, TDBFormat>
     {
-        TDBFormat CreateFilterQuery(TListTFilterQuery queryInput);
+        TDBFormat CreateFilterQuery(TListFilterQuery queryInput);
     }
 }

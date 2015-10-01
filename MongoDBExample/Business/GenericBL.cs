@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Business
 {
-    public class GenericBL<T, U, TOne, TTwo, TThree> : IBL<T, TTwo, TThree>
+    public class GenericBL<TEntity, TDatabase, TListDBFormat, TFieldId, TListFilterQuery> : IBL<TEntity, TFieldId, TListFilterQuery>
     {
-        private IRepository<TOne, TTwo, TThree, T> repository;
-        private IMapper<T, BsonDocument> mapper;
+        private IRepository<TListDBFormat, TFieldId, TListFilterQuery, TEntity> repository;
+        private IMapper<TEntity, BsonDocument> mapper;
 
-        public GenericBL(IDBConnection<U> dbConnection, string databaseName, string document)
+        public GenericBL(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
-            this.repository = RepositoryFactory<TOne, TTwo, TThree, T, U>.Create(dbConnection, databaseName, document);
-            this.mapper = MongoMapperFactory<T>.Create();
+            this.repository = RepositoryFactory<TListDBFormat, TFieldId, TListFilterQuery, TEntity, TDatabase>.Create(dbConnection, databaseName, document);
+            this.mapper = MongoMapperFactory<TEntity>.Create();
         }
 
-        public bool Create(T entity)
+        public bool Create(TEntity entity)
         {
             try
             {
@@ -38,18 +38,18 @@ namespace MongoDBExample.Business
             }
         }
 
-        public T GetById(TTwo id)
+        public TEntity GetById(TFieldId id)
         {
             IEnumerable<BsonDocument> result = (IEnumerable<BsonDocument>)this.repository.GetById(id);
             var clientBsonDocument = result.ToList<BsonDocument>().First();
             return this.mapper.Mapper(clientBsonDocument);
         }
 
-        public IEnumerable<T> GetFiltered(TThree query)
+        public IEnumerable<TEntity> GetFiltered(TListFilterQuery query)
         {
             var result = (IEnumerable<BsonDocument>)this.repository.GetFiltered(query);
             IEnumerable<BsonDocument> resultInList = result.ToList();
-            IList<T> entityList = new List<T>();
+            IList<TEntity> entityList = new List<TEntity>();
             foreach (var item in resultInList)
             {
                 entityList.Add(this.mapper.Mapper(item));
