@@ -28,16 +28,16 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBLInstance = new ClientBL(mongoDatabase, document);
+            var clientBL = new GenericBL<Client>(mongoDatabase, document);
 
             //Creation
-            var client = new Client("52", "test");
+            var client = new Client("555", "test");
 
             //Insert
-            clientBLInstance.Create(client);
+            clientBL.Create(client);
 
             //GetById
-            var obtainedClient = clientBLInstance.GetById(client.Id);
+            var obtainedClient = clientBL.GetById(client.Id);
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
             Console.ReadLine();
 

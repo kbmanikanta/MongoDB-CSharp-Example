@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Business
 {
-    public interface IBL<TOne, TTwo, TThree, TFour>
+    public interface IBL<TOne, TTwo, TThree>
     {
         TOne GetById(TTwo id);
-        TFour GetFiltered(TThree query);
+        IEnumerable<TOne> GetFiltered(TThree query);
         bool Create(TOne recurse);
     }
 }

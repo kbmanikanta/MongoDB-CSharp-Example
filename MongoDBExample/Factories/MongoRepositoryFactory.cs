@@ -14,10 +14,7 @@ namespace MongoDBExample.Factories
     {
         public static MongoRepository<T> Create(IMongoDatabase mongoDatabase, string document)
         {
-            string mapperName = "MongoDBExample.Mappers." + typeof(T).Name.ToString() + "Mapper";
-            Type typeOfMapper = Type.GetType(mapperName);
-            IMapper<T, BsonDocument> mapper = (IMapper < T, BsonDocument> )Activator.CreateInstance(typeOfMapper);
-
+            IMapper<T, BsonDocument> mapper = MongoMapperFactory<T>.Create();
             return new MongoRepository<T>(mongoDatabase, document, mapper);
         }
     }
