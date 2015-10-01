@@ -8,7 +8,9 @@ namespace MongoDBExample.Models
 {
     public class Client
     {
-        
+        public Client()
+        {
+        }
 
         public Client(string id, string name)
         {

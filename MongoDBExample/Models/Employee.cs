@@ -8,6 +8,9 @@ namespace MongoDBExample.Models
 {
     public class Employee
     {
+        public Employee()
+        {
+        }
         public Employee(string id, string name, string workstation)
         {
             this.Id = id;
@@ -15,8 +18,13 @@ namespace MongoDBExample.Models
             this.WorkStation = workstation;
         }
 
-        public string Id;
-        public string Name;
-        public string WorkStation;
+        [Custom(DBColumnName = "_id")]
+        public string Id { get; set; }
+
+        [Custom(DBColumnName = "name")]
+        public string Name { get; set; }
+
+        [Custom(DBColumnName = "workstation")]
+        public string WorkStation { get; set; }
     }
 }

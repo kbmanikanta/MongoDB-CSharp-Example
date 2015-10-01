@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Mappers
 {
-    public interface IMapper<TOrigen, TDestino>
+    public interface IMapper<TEntity, TDBFormat>
     {
-        TDestino Mapper(TOrigen origen);
-        TOrigen Mapper(TDestino destino);
+        TDBFormat Mapper(TEntity entity);
+        TEntity Mapper(TDBFormat dbFormat);
     }
 }

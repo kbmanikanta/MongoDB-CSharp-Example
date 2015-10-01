@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class MongoMapperFactory<T>
+    public static class MongoMapperFactory<TEntity>
     {
-        public static IMapper<T, BsonDocument> Create()
+        public static IMapper<TEntity, BsonDocument> Create()
         {
-            string mapperName = "MongoDBExample.Mappers." + typeof(T).Name.ToString() + "Mapper";
-            Type typeOfMapper = Type.GetType(mapperName);
-            IMapper<T, BsonDocument> mapper = (IMapper<T, BsonDocument>)Activator.CreateInstance(typeOfMapper); 
+            IMapper<TEntity, BsonDocument> mapper = new MongoMapper<TEntity>();
+            
+            //string mapperName = "MongoDBExample.Mappers." + typeof(T).Name.ToString() + "Mapper";
+            //Type typeOfMapper = Type.GetType(mapperName);
+            //IMapper<T, BsonDocument> mapper = (IMapper<T, BsonDocument>)Activator.CreateInstance(typeOfMapper); 
             return mapper;
         }
     }
