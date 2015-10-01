@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.DBConnection
 {
-    public interface IDBConnection<T> 
+    public interface IDBConnection<TDatabase> 
     {
         bool OpenConnection();
         bool CloseConnection();
-        T GetDatabase(string databaseName);
+        TDatabase GetDatabase(string databaseName);
     }
 }

@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class GenericBLFactory<TOne, TTwo, TThree>
+    public static class GenericBLFactory<TEntity, TFieldId, TListFilterQuery>
     {
-        public static IBL<TOne, TTwo, TThree> Create(IDBConnection<IMongoDatabase> dbConnection, string databaseName, string clientDocument)
+        public static IBL<TEntity, TFieldId, TListFilterQuery> Create(IDBConnection<IMongoDatabase> dbConnection, string databaseName, string clientDocument)
         {
-            return new GenericBL<TOne, IMongoDatabase, IEnumerable<BsonDocument>, TTwo, TThree>(dbConnection, databaseName, clientDocument);
+            return new GenericBL<TEntity, IMongoDatabase, IEnumerable<BsonDocument>, TFieldId, TListFilterQuery>(dbConnection, databaseName, clientDocument);
         }
     }
 }

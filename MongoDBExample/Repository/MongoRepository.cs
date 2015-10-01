@@ -11,7 +11,7 @@ using MongoDBExample.Mappers;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository<TEntity, TDatabase> : IRepository<IEnumerable<BsonDocument>, string, IList<TFilterQuery>, TEntity>
+    public class MongoRepository<TEntity, TDatabase> : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, TEntity>
     {
         private IMongoDatabase mongoDatabase;
         private string document;
@@ -26,8 +26,8 @@ namespace MongoDBExample.Repository
 
         public IEnumerable<BsonDocument> GetById(string id)
         {
-            var filterParam = new TFilterQuery("_id", id, "$eq");
-            IList<TFilterQuery> filterParams = new List<TFilterQuery>() { filterParam };
+            var filterParam = new FilterQuery("_id", id, "$eq");
+            IList<FilterQuery> filterParams = new List<FilterQuery>() { filterParam };
 
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
@@ -35,7 +35,7 @@ namespace MongoDBExample.Repository
             return mongoQuery.Result;
         }
 
-        public IEnumerable<BsonDocument> GetFiltered(IList<TFilterQuery> filterParams)
+        public IEnumerable<BsonDocument> GetFiltered(IList<FilterQuery> filterParams)
         {
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
