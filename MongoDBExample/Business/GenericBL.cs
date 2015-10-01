@@ -34,7 +34,7 @@ namespace MongoDBExample.Business
             {
                 Debug.WriteLine("Exception Message: " + ex.Message);
                 return false;
-            }
+            } 
         }
 
         public T GetById(string id)

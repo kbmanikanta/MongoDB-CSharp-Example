@@ -9,7 +9,7 @@ namespace MongoDBExample.Business
     public interface IBL<TOne, TTwo, TThree>
     {
         TOne GetById(TTwo id);
-        IEnumerable<TOne> GetFiltered(TThree query);
+        IEnumerable<TOne> GetFiltered(TThree query); 
         bool Create(TOne recurse);
     }
 }

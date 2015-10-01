@@ -17,7 +17,7 @@ namespace MongoDBExample.Repository
         private string document;
         private IMapper<T, BsonDocument> mapper;
 
-        public MongoRepository(IMongoDatabase mongoDatabase, string document, IMapper<T, BsonDocument> mapper)
+        public MongoRepository(IMongoDatabase mongoDatabase, string document, IMapper<T, BsonDocument> mapper) 
         {
             this.mongoDatabase = mongoDatabase;
             this.document = document;
