@@ -70,6 +70,7 @@
     <Compile Include="Business\GenericBL.cs" />
     <Compile Include="Business\IBL.cs" />
     <Compile Include="DBConnection\IDBConnection.cs" />
+    <Compile Include="DBConnection\SQLServerConnection.cs" />
     <Compile Include="DBConnection\MongoConnection.cs" />
     <Compile Include="Factories\GenericBLFactory.cs" />
     <Compile Include="Factories\MongoMapperFactory.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\MongoQuery.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\SQLServerRepository.cs" />
     <Compile Include="Repository\MongoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
