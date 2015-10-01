@@ -8,13 +8,18 @@ namespace MongoDBExample.Models
 {
     public class Client
     {
+        
+
         public Client(string id, string name)
         {
             this.Id = id;
             this.Name = name;
         }
+        
+        [Custom(DBColumnName = "_id")]
+        public string Id { get; set; }
 
-        public string Id;
-        public string Name;
+        [Custom(DBColumnName = "name")]
+        public string Name { get; set; }
     }
 }

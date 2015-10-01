@@ -20,6 +20,10 @@ namespace MongoDBExample
     {
         static void Main(string[] args)
         {
+
+
+
+
             string databaseName = "test";
             string clientDocument = "client";
             string employeeDocument = "employee";
