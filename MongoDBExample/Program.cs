@@ -12,6 +12,7 @@ using MongoDBExample.Models;
 using MongoDBExample.Factories;
 using MongoDBExample.Mappers;
 using MongoDBExample.Business;
+using Autofac;
 
 namespace MongoDBExample
 {
@@ -27,14 +28,21 @@ namespace MongoDBExample
             string clientDocument = "client";
             string employeeDocument = "employee";
 
+            // IoC configuration
+            var containerBuilder = new ContainerBuilder();
+            IConfigIoC manager = new IoCManager(containerBuilder);
+            manager.Configure();
+            IContainer builder = containerBuilder.Build();
+
+            var dbConnection = builder.Resolve<IDBConnection<IMongoDatabase>>();
+
             //Connection
-            var dbConnection = new MongoConnection();
             dbConnection.OpenConnection();
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = new GenericBL<Client>(mongoDatabase, clientDocument);
-            var employeeBL = new GenericBL<Employee>(mongoDatabase, employeeDocument);
+            var clientBL = GenericBLFactory<Client, string, IList<QueryInfo>>.Create(dbConnection, databaseName, clientDocument);
+            var employeeBL = GenericBLFactory<Employee, string, IList<QueryInfo>>.Create(dbConnection, databaseName, employeeDocument);
 
             //Creation
             var client = new Client("55554", "Joan");
@@ -42,7 +50,7 @@ namespace MongoDBExample
 
             //Insert
             clientBL.Create(client);
-            employeeBL.Create(employee);
+            //employeeBL.Create(employee);
 
             //GetById
             var obtainedClient = clientBL.GetById(client.Id);
@@ -50,7 +58,7 @@ namespace MongoDBExample
             var obtainedEmployee = employeeBL.GetById(employee.Id);
             Console.WriteLine("Employee insertado correctamente. Id: {0}, Name: {1}, WorkStation: {2}", obtainedEmployee.Id, obtainedEmployee.Name, obtainedEmployee.WorkStation);
             Console.ReadLine();
-            
+
             //GetFiltered
             IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
             queryGetFiltered.Add(new QueryInfo("_id", "55554", "$eq"));
@@ -75,6 +83,6 @@ namespace MongoDBExample
             Console.ReadLine();
         }
 
-        
+
     }
 }

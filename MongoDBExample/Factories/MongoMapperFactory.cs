@@ -14,7 +14,7 @@ namespace MongoDBExample.Factories
         {
             string mapperName = "MongoDBExample.Mappers." + typeof(T).Name.ToString() + "Mapper";
             Type typeOfMapper = Type.GetType(mapperName);
-            IMapper<T, BsonDocument> mapper = (IMapper<T, BsonDocument>)Activator.CreateInstance(typeOfMapper);
+            IMapper<T, BsonDocument> mapper = (IMapper<T, BsonDocument>)Activator.CreateInstance(typeOfMapper); 
             return mapper;
         }
     }

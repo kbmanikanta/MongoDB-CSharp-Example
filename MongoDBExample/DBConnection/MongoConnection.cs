@@ -19,7 +19,7 @@ namespace MongoDBExample.DBConnection
 
         public IMongoDatabase GetDatabase(string databaseName)
         {
-            return _client.GetDatabase(databaseName);
+            return _client.GetDatabase(databaseName); 
         }
 
         public bool OpenConnection()
