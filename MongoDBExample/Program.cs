@@ -29,7 +29,7 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = new GenericBL<Client, IMongoDatabase, IEnumerable<BsonDocument>, string, IList<QueryInfo>>(dbConnection, databaseName, clientDocument);
+            var clientBL = GenericBLFactory<Client, string, IList<QueryInfo>>.Create(dbConnection, databaseName, clientDocument);
             //var employeeBL = new GenericBL<Employee>(mongoDatabase, employeeDocument);
 
             //Creation
