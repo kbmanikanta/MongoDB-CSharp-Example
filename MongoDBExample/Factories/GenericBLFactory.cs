@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class GenericBLFactory 
+    public static class GenericBLFactory<TOne, TTwo, TThree>
     {
-        public static GenericBL< Create()
-        {
-            
-        }
+        //public static IBL<TOne, TTwo, TThree> Create()
+        //{
+             
+        //}
     }
 }

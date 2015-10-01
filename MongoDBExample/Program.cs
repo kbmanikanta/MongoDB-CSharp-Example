@@ -29,8 +29,8 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = new GenericBL<Client>(mongoDatabase, clientDocument);
-            var employeeBL = new GenericBL<Employee>(mongoDatabase, employeeDocument);
+            var clientBL = new GenericBL<Client, IMongoDatabase, IEnumerable<BsonDocument>, string, IList<QueryInfo>>(dbConnection, databaseName, clientDocument);
+            //var employeeBL = new GenericBL<Employee>(mongoDatabase, employeeDocument);
 
             //Creation
             var client = new Client("55554", "Joan");
@@ -38,15 +38,15 @@ namespace MongoDBExample
 
             //Insert
             clientBL.Create(client);
-            employeeBL.Create(employee);
+            //employeeBL.Create(employee);
 
             //GetById
             var obtainedClient = clientBL.GetById(client.Id);
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
-            var obtainedEmployee = employeeBL.GetById(employee.Id);
-            Console.WriteLine("Employee insertado correctamente. Id: {0}, Name: {1}, WorkStation: {2}", obtainedEmployee.Id, obtainedEmployee.Name, obtainedEmployee.WorkStation);
+            //var obtainedEmployee = employeeBL.GetById(employee.Id);
+            //Console.WriteLine("Employee insertado correctamente. Id: {0}, Name: {1}, WorkStation: {2}", obtainedEmployee.Id, obtainedEmployee.Name, obtainedEmployee.WorkStation);
             Console.ReadLine();
-            
+
             //GetFiltered
             IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
             queryGetFiltered.Add(new QueryInfo("_id", "55554", "$eq"));
@@ -58,19 +58,19 @@ namespace MongoDBExample
                 Console.WriteLine("Cliente encontrado: Id: {0}, Name: {1}", oneClient.Id, oneClient.Name);
             }
 
-            IList<QueryInfo> queryGetFiltered2 = new List<QueryInfo>();
-            queryGetFiltered2.Add(new QueryInfo("_id", "12", "$eq"));
-            queryGetFiltered2.Add(new QueryInfo("workstation", "Wolters Kluwers", "$eq"));
-            var resultGetFiltered2 = employeeBL.GetFiltered(queryGetFiltered2);
-            Console.WriteLine("Employees encontrados:");
-            foreach (var oneEmployee in resultGetFiltered2)
-            {
-                Console.WriteLine("Employee encontrado Id: {0}, Name: {1}, WorkStation: {2}", oneEmployee.Id, oneEmployee.Name, oneEmployee.WorkStation);
-            }
+            //IList<QueryInfo> queryGetFiltered2 = new List<QueryInfo>();
+            //queryGetFiltered2.Add(new QueryInfo("_id", "12", "$eq"));
+            //queryGetFiltered2.Add(new QueryInfo("workstation", "Wolters Kluwers", "$eq"));
+            //var resultGetFiltered2 = employeeBL.GetFiltered(queryGetFiltered2);
+            //Console.WriteLine("Employees encontrados:");
+            //foreach (var oneEmployee in resultGetFiltered2)
+            //{
+            //    Console.WriteLine("Employee encontrado Id: {0}, Name: {1}, WorkStation: {2}", oneEmployee.Id, oneEmployee.Name, oneEmployee.WorkStation);
+            //}
 
             Console.ReadLine();
         }
 
-        
+
     }
 }

@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class MongoRepositoryFactory<T>
+    public static class MongoRepositoryFactory<T, TDatabase>
     {
-        public static MongoRepository<T> Create(IMongoDatabase mongoDatabase, string document) 
+        public static MongoRepository<T, TDatabase> Create(TDatabase mongoDatabase, string document)
         {
             IMapper<T, BsonDocument> mapper = MongoMapperFactory<T>.Create();
-            return new MongoRepository<T>(mongoDatabase, document, mapper);
+            return new MongoRepository<T, TDatabase>(mongoDatabase, document, mapper);
         }
     }
 }

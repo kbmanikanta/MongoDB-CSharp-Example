@@ -11,20 +11,20 @@ using MongoDBExample.Mappers;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository<T> : IRepository<Task<IEnumerable<BsonDocument>>, string, IList<QueryInfo>, T>
+    public class MongoRepository<T, TDatabase> : IRepository<IEnumerable<BsonDocument>, string, IList<QueryInfo>, T>
     {
         private IMongoDatabase mongoDatabase;
         private string document;
         private IMapper<T, BsonDocument> mapper;
 
-        public MongoRepository(IMongoDatabase mongoDatabase, string document, IMapper<T, BsonDocument> mapper) 
+        public MongoRepository(TDatabase mongoDatabase, string document, IMapper<T, BsonDocument> mapper)
         {
-            this.mongoDatabase = mongoDatabase;
+            this.mongoDatabase = (IMongoDatabase)mongoDatabase;
             this.document = document;
             this.mapper = mapper;
         }
 
-        public Task<IEnumerable<BsonDocument>> GetById(string id)
+        public IEnumerable<BsonDocument> GetById(string id)
         {
             var filterParam = new QueryInfo("_id", id, "$eq");
             IList<QueryInfo> filterParams = new List<QueryInfo>() { filterParam };
@@ -32,15 +32,15 @@ namespace MongoDBExample.Repository
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
             Task.WaitAll(mongoQuery);
-            return mongoQuery;
+            return mongoQuery.Result;
         }
 
-        public Task<IEnumerable<BsonDocument>> GetFiltered(IList<QueryInfo> filterParams)
+        public IEnumerable<BsonDocument> GetFiltered(IList<QueryInfo> filterParams)
         {
             var filterQuery = new MongoQuery().CreateFilterQuery(filterParams);
             var mongoQuery = this.MongoQuery(filterQuery);
             Task.WaitAll(mongoQuery);
-            return mongoQuery;
+            return mongoQuery.Result;
         }
 
         public bool Create(T recurse)
@@ -76,6 +76,6 @@ namespace MongoDBExample.Repository
             return true;
         }
 
-        
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDBExample.DBConnection;
 using MongoDBExample.Factories;
 using MongoDBExample.Mappers;
 using MongoDBExample.Models;
@@ -13,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Business
 {
-    public class GenericBL<T> : IBL<T, string, IList<QueryInfo>>
+    public class GenericBL<T, U, TOne, TTwo, TThree> : IBL<T, TTwo, TThree>
     {
-        private MongoRepository<T> repository;
+        private IRepository<TOne, TTwo, TThree, T> repository;
         private IMapper<T, BsonDocument> mapper;
 
-        public GenericBL(IMongoDatabase mongoDatabase, string document)
+        public GenericBL(IDBConnection<U> dbConnection, string databaseName, string document)
         {
-            this.repository = MongoRepositoryFactory<T>.Create(mongoDatabase, document);
+            this.repository = RepositoryFactory<TOne, TTwo, TThree, T, U>.Create(dbConnection, databaseName, document);
             this.mapper = MongoMapperFactory<T>.Create();
         }
 
@@ -34,20 +35,20 @@ namespace MongoDBExample.Business
             {
                 Debug.WriteLine("Exception Message: " + ex.Message);
                 return false;
-            } 
+            }
         }
 
-        public T GetById(string id)
+        public T GetById(TTwo id)
         {
-            var result = this.repository.GetById(id);
-            var clientBsonDocument = result.Result.ToList<BsonDocument>().First();
+            IEnumerable<BsonDocument> result = (IEnumerable<BsonDocument>)this.repository.GetById(id);
+            var clientBsonDocument = result.ToList<BsonDocument>().First();
             return this.mapper.Mapper(clientBsonDocument);
         }
 
-        public IEnumerable<T> GetFiltered(IList<QueryInfo> query)
+        public IEnumerable<T> GetFiltered(TThree query)
         {
-            var result = this.repository.GetFiltered(query);
-            IEnumerable<BsonDocument> resultInList = result.Result.ToList();
+            var result = (IEnumerable<BsonDocument>)this.repository.GetFiltered(query);
+            IEnumerable<BsonDocument> resultInList = result.ToList();
             IList<T> entityList = new List<T>();
             foreach (var item in resultInList)
             {

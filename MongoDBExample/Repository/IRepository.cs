@@ -10,7 +10,7 @@ namespace MongoDBExample.Repository
     public interface IRepository<TOne, TTwo, TThree, TFour>
     {
         TOne GetById(TTwo id);
-        TOne GetFiltered(TThree query); 
+        TOne GetFiltered(TThree query);
         bool Create(TFour recurse);
     }
 }
