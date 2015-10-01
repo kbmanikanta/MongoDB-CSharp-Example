@@ -6,6 +6,7 @@ using MongoDBExample.Models;
 using MongoDBExample.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,10 +30,10 @@ namespace MongoDBExample.Business
             {
                 return this.repository.Create(entity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Debug.WriteLine("Exception Message: " + ex.Message);
+                return false;
             }
         }
 
