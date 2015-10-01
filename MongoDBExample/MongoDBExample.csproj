@@ -67,8 +67,10 @@
     <Compile Include="Business\IBL.cs" />
     <Compile Include="DBConnection\IDBConnection.cs" />
     <Compile Include="DBConnection\MongoConnection.cs" />
+    <Compile Include="Factories\GenericBLFactory.cs" />
     <Compile Include="Factories\MongoMapperFactory.cs" />
     <Compile Include="Factories\MongoRepositoryFactory.cs" />
+    <Compile Include="Factories\RepositoryFactory.cs" />
     <Compile Include="Mappers\EmployeeMapper.cs" />
     <Compile Include="Mappers\ClientMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />

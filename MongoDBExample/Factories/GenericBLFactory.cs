@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class GenericBLFactory
+    public static class GenericBLFactory 
     {
         public static GenericBL< Create()
         {

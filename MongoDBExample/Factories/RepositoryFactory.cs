@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDBExample.DBConnection;
 
-namespace MongoDBExample.Factories
+namespace MongoDBExample.Factories 
 {
     public static class RepositoryFactory<TOne, TTwo, TThree, TFour, TFive>
     {
