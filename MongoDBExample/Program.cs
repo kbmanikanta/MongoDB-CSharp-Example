@@ -29,16 +29,21 @@ namespace MongoDBExample
 
             //ClientBL
             var clientBL = new GenericBL<Client>(mongoDatabase, document);
+            var employeeBL = new GenericBL<Employee>(mongoDatabase, document);
 
             //Creation
-            var client = new Client("555", "test");
+            var client = new Client("55554", "test");
+            var employee = new Employee("12", "Joan", "Wolters Kluwers");
 
             //Insert
             clientBL.Create(client);
+            employeeBL.Create(employee);
 
             //GetById
             var obtainedClient = clientBL.GetById(client.Id);
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
+            var obtainedEmployee = employeeBL.GetById(employee.Id);
+            Console.WriteLine("Employee insertado correctamente. Id: {0}, Name: {1}, WorkStation: {2}", obtainedEmployee.Id, obtainedEmployee.Name, obtainedEmployee.WorkStation);
             Console.ReadLine();
 
             
