@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Models
 {
-    public class QueryInfo
+    public class TFilterQuery
     {
-        public QueryInfo(string key, string value, string queryOperator)
+        public TFilterQuery(string key, string value, string queryOperator)
         {
             this.Key = key;
             this.Value = value;

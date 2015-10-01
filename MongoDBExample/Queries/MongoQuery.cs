@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Queries
 {
-    public class MongoQuery : IQuery<IList<QueryInfo>, BsonDocument>
+    public class MongoQuery : IQuery<IList<TFilterQuery>, BsonDocument>
     {
-        public BsonDocument CreateFilterQuery(IList<QueryInfo> filterParams)
+        public BsonDocument CreateFilterQuery(IList<TFilterQuery> filterParams)
         {
             BsonDocument filterQuery = new BsonDocument();
 

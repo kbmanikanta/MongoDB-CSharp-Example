@@ -37,8 +37,8 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = GenericBLFactory<Client, string, IList<QueryInfo>>.Create(dbConnection, databaseName, clientDocument);
-            var employeeBL = GenericBLFactory<Employee, string, IList<QueryInfo>>.Create(dbConnection, databaseName, employeeDocument);
+            var clientBL = GenericBLFactory<Client, string, IList<TFilterQuery>>.Create(dbConnection, databaseName, clientDocument);
+            var employeeBL = GenericBLFactory<Employee, string, IList<TFilterQuery>>.Create(dbConnection, databaseName, employeeDocument);
 
             //Creation
             var client = new Client("55554", "Joan");
@@ -56,9 +56,9 @@ namespace MongoDBExample
             Console.ReadLine();
 
             //GetFiltered
-            IList<QueryInfo> queryGetFiltered = new List<QueryInfo>();
-            queryGetFiltered.Add(new QueryInfo("_id", "55554", "$eq"));
-            queryGetFiltered.Add(new QueryInfo("name", "Joan", "$eq"));
+            IList<TFilterQuery> queryGetFiltered = new List<TFilterQuery>();
+            queryGetFiltered.Add(new TFilterQuery("_id", "55554", "$eq"));
+            queryGetFiltered.Add(new TFilterQuery("name", "Joan", "$eq"));
             var resultGetFiltered = clientBL.GetFiltered(queryGetFiltered);
             Console.WriteLine("Clientes encontrados:");
             foreach (var oneClient in resultGetFiltered)
@@ -66,9 +66,9 @@ namespace MongoDBExample
                 Console.WriteLine("Cliente encontrado: Id: {0}, Name: {1}", oneClient.Id, oneClient.Name);
             }
 
-            IList<QueryInfo> queryGetFiltered2 = new List<QueryInfo>();
-            queryGetFiltered2.Add(new QueryInfo("_id", "12", "$eq"));
-            queryGetFiltered2.Add(new QueryInfo("workstation", "Wolters Kluwers", "$eq"));
+            IList<TFilterQuery> queryGetFiltered2 = new List<TFilterQuery>();
+            queryGetFiltered2.Add(new TFilterQuery("_id", "12", "$eq"));
+            queryGetFiltered2.Add(new TFilterQuery("workstation", "Wolters Kluwers", "$eq"));
             var resultGetFiltered2 = employeeBL.GetFiltered(queryGetFiltered2);
             Console.WriteLine("Employees encontrados:");
             foreach (var oneEmployee in resultGetFiltered2)
