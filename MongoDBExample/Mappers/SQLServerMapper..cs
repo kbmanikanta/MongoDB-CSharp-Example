@@ -51,7 +51,8 @@ namespace MongoDBExample.Mappers
             object datasetobject = TDBFormatDataSet;
             DataSet dataSet = (DataSet)datasetobject;
 
-            var phisicalDevicesList = DataTableExtensions.ToList<PhisicalDevices>(dataSet.Tables[0]);
+            // se aplica la extensión de datatable definida arriba
+            var phisicalDevicesList = dataSet.Tables[0].ToList<PhisicalDevices>();
             
             foreach (var item in phisicalDevicesList)
             {
