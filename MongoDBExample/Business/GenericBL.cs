@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Business
 {
-    public class GenericBL<TEntity, TDatabase, TListDBFormat, TFieldId, TListFilterQuery> : IBL<TEntity, TFieldId, TListFilterQuery>
+    public class GenericBL<TEntity, TDatabase, TListDBFormat, TFieldId, TListFilterQuery, TDBFormat> : IBL<TEntity, TFieldId, TListFilterQuery>
     {
         private IRepository<TListDBFormat, TFieldId, TListFilterQuery, TEntity> repository;
-        private IMapper<TEntity, BsonDocument> mapper;
+        private IMapper<TEntity, TDBFormat> mapper;
 
         public GenericBL(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
@@ -29,7 +29,8 @@ namespace MongoDBExample.Business
         {
             try
             {
-                return this.repository.Create(entity);
+                TDBFormat tDbFormat = this.mapper.Mapper(entity);
+                return this.repository.Create(tDbFormat);
             }
             catch (Exception ex)
             {

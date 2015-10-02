@@ -16,7 +16,7 @@ namespace MongoDBExample.Factories
         public static IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TEntity> Create(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
             IMapper<TEntity, BsonDocument> mapper = MongoMapperFactory<TEntity>.Create();
-            IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TEntity> repo = (IRepository < TListDBFormat, TFieldId, TListTFilterQuery, TEntity>)new MongoRepository<TEntity, TDatabase>(dbConnection.GetDatabase(databaseName), document, mapper);
+            IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TEntity> repo = (IRepository < TListDBFormat, TFieldId, TListTFilterQuery, TEntity>)new MongoRepository<TEntity, TDatabase>(dbConnection.GetDatabase(databaseName), document);
             return repo;
         }
     }

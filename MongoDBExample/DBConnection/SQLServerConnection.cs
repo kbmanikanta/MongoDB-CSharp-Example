@@ -12,11 +12,12 @@ namespace MongoDBExample.DBConnection
     public class SQLServerConnection : IDBConnection<SqlConnection>
     {
         private SqlConnection conn;
+        private string connectionString;
 
         public SQLServerConnection()
         {
-            this.conn = new System.Data.SqlClient.SqlConnection();
-            conn.ConnectionString = "Data Source=\\SQL2012;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            this.connectionString = "Data Source=AJULIA1\\SQL2012;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            this.conn = new SqlConnection(this.connectionString);
         }
 
         public bool CloseConnection()

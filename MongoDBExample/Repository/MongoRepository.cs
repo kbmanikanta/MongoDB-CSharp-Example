@@ -11,17 +11,15 @@ using MongoDBExample.Mappers;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository<TEntity, TDatabase> : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, TEntity>
+    public class MongoRepository<TEntity> : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, TEntity>
     {
         private IMongoDatabase mongoDatabase;
         private string document;
-        private IMapper<TEntity, BsonDocument> mapper;
 
-        public MongoRepository(TDatabase mongoDatabase, string document, IMapper<TEntity, BsonDocument> mapper)
+        public MongoRepository(IMongoDatabase mongoDatabase, string document)
         {
             this.mongoDatabase = (IMongoDatabase)mongoDatabase;
             this.document = document;
-            this.mapper = mapper;
         }
 
         public IEnumerable<BsonDocument> GetById(string id)
@@ -43,9 +41,8 @@ namespace MongoDBExample.Repository
             return mongoQuery.Result;
         }
 
-        public bool Create(TEntity recurse)
+        public bool Create(BsonDocument bsonRecurse)
         {
-            BsonDocument bsonRecurse = this.mapper.Mapper(recurse);
             var mongoInsertVal = this.MongoInsert(bsonRecurse);
             Task.WaitAll(mongoInsertVal);
             return false;

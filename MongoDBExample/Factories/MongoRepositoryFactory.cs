@@ -15,7 +15,7 @@ namespace MongoDBExample.Factories
         public static MongoRepository<TEntity, TDatabase> Create(TDatabase mongoDatabase, string document)
         {
             IMapper<TEntity, BsonDocument> mapper = MongoMapperFactory<TEntity>.Create();
-            return new MongoRepository<TEntity, TDatabase>(mongoDatabase, document, mapper);
+            return new MongoRepository<TEntity, TDatabase>(mongoDatabase, document);
         }
     }
 }

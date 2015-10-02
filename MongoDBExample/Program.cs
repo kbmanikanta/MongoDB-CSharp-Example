@@ -13,6 +13,7 @@ using MongoDBExample.Factories;
 using MongoDBExample.Mappers;
 using MongoDBExample.Business;
 using Autofac;
+using System.Data.SqlClient;
 
 namespace MongoDBExample
 {
@@ -21,8 +22,9 @@ namespace MongoDBExample
         static void Main(string[] args)
         {
 
-
-
+            var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
+            var sqlServerRepo = new SQLServerRepository<Client>("", null);
+            sqlServerRepo.GetById("5");
 
             string databaseName = "test";
             string clientDocument = "client";
