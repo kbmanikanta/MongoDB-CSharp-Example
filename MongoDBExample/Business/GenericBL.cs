@@ -42,8 +42,8 @@ namespace MongoDBExample.Business
         public TEntity GetById(TFieldId id)
         {
             IEnumerable<TDBFormat> result = (IEnumerable<TDBFormat>)this.repository.GetById(id);
-            var bsonDocument = result.ToList<TDBFormat>().First();
-            return this.mapper.MapToEntity(bsonDocument);
+            var dbFormat = result.ToList<TDBFormat>().First();
+            return this.mapper.MapToEntity(dbFormat);
         }
 
         public IEnumerable<TEntity> GetFiltered(TListFilterQuery query)

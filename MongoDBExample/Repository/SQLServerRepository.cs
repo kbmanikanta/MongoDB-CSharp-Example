@@ -14,7 +14,7 @@ using MongoDBExample.DBConnection;
 
 namespace MongoDBExample.Repository
 {
-    public class SQLServerRepository<TEntity> : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, TEntity>
+    public class SQLServerRepository<TEntity> : IRepository<IEnumerable<DataSet>, string, IList<FilterQuery>, TEntity>
     {
         private string document;
         private IMapper<TEntity, BsonDocument> mapper;
@@ -25,8 +25,9 @@ namespace MongoDBExample.Repository
             this.mapper = mapper;
         }
 
-        public IEnumerable<BsonDocument> GetById(string id)
+        public IEnumerable<DataSet> GetById(string id)
         {
+            var ds = new DataSet();
             var sqlServerConnection = new SQLServerConnection();
             using (SqlConnection con = sqlServerConnection.GetDatabase(null))
             {
@@ -38,20 +39,17 @@ namespace MongoDBExample.Repository
                 // The following code uses an SqlCommand based on the SqlConnection.
                 //
                 using (SqlCommand command = new SqlCommand("SELECT TOP 1000 [Id] FROM[ORMTest].[dbo].[ParameterValues]", con))
-                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
-                    {
-                        Console.WriteLine("{0}",
-                        reader.GetGuid(0));
-                    }
+                    var adapter = new SqlDataAdapter(command);
+                    adapter.Fill(ds);
                 }
                 sqlServerConnection.CloseConnection();
             }
-            throw new NotImplementedException();
+            IEnumerable<DataSet> enumerableDataSet = new List<DataSet>() { ds };
+            return enumerableDataSet;
         }
 
-        public IEnumerable<BsonDocument> GetFiltered(IList<FilterQuery> query)
+        public IEnumerable<DataSet> GetFiltered(IList<FilterQuery> query)
         {
             throw new NotImplementedException();
         }

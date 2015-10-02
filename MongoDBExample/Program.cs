@@ -22,9 +22,9 @@ namespace MongoDBExample
         static void Main(string[] args)
         {
 
-            //var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
-            //var sqlServerRepo = new SQLServerRepository<Client>("", null);
-            //sqlServerRepo.GetById("5");
+            var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
+            var sqlServerRepo = new SQLServerRepository<Client>("", null);
+            sqlServerRepo.GetById("5");
 
             string databaseName = "test";
             string clientDocument = "client";
