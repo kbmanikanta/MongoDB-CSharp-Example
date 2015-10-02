@@ -81,6 +81,7 @@
     <Compile Include="Mappers\EmployeeMapper.cs" />
     <Compile Include="Mappers\ClientMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
+    <Compile Include="Mappers\MongoMapper.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\CustomAttribute.cs" />

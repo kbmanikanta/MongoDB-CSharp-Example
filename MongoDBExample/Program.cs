@@ -52,11 +52,12 @@ namespace MongoDBExample
 
             //Insert
             clientBL.Create(client);
-            //employeeBL.Create(employee);
+            employeeBL.Create(employee);
 
             //GetById
             var obtainedClient = clientBL.GetById(client.Id);
             Console.WriteLine("Cliente insertado correctamente. Id: {0}, Name: {1}", obtainedClient.Id, obtainedClient.Name);
+
             var obtainedEmployee = employeeBL.GetById(employee.Id);
             Console.WriteLine("Employee insertado correctamente. Id: {0}, Name: {1}, WorkStation: {2}", obtainedEmployee.Id, obtainedEmployee.Name, obtainedEmployee.WorkStation);
             Console.ReadLine();
