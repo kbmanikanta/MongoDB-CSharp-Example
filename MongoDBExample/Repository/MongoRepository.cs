@@ -11,7 +11,7 @@ using MongoDBExample.Mappers;
 
 namespace MongoDBExample.Repository
 {
-    public class MongoRepository<TEntity> : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, TEntity>
+    public class MongoRepository : IRepository<IEnumerable<BsonDocument>, string, IList<FilterQuery>, BsonDocument>
     {
         private IMongoDatabase mongoDatabase;
         private string document;

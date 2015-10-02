@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories 
 {
-    public static class RepositoryFactory<TListDBFormat, TFieldId, TListTFilterQuery, TEntity, TDatabase>
+    public static class RepositoryFactory<TListDBFormat, TFieldId, TListTFilterQuery, TEntity, TDatabase, TDBFormat>
     {
-        public static IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TEntity> Create(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
+        public static IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> Create(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
-            IMapper<TEntity, BsonDocument> mapper = MongoMapperFactory<TEntity>.Create();
-            IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TEntity> repo = (IRepository < TListDBFormat, TFieldId, TListTFilterQuery, TEntity>)new MongoRepository<TEntity, TDatabase>(dbConnection.GetDatabase(databaseName), document);
+            IMapper<TEntity, TDBFormat> mapper = MongoMapperFactory<TEntity, TDBFormat>.Create();
+            IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> repo = (IRepository < TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat>)new MongoRepository((IMongoDatabase)dbConnection.GetDatabase(databaseName), document);
             return repo;
         }
     }

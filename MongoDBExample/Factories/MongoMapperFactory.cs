@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Factories
 {
-    public static class MongoMapperFactory<TEntity>
+    public static class MongoMapperFactory<TEntity, TDBFormat>
     {
-        public static IMapper<TEntity, BsonDocument> Create()
+        public static IMapper<TEntity, TDBFormat> Create()
         {
-            IMapper<TEntity, BsonDocument> mapper = new MongoMapper<TEntity>();
+            IMapper<TEntity, TDBFormat> mapper = new MongoMapper<TEntity, TDBFormat>();
             
             //string mapperName = "MongoDBExample.Mappers." + typeof(T).Name.ToString() + "Mapper";
             //Type typeOfMapper = Type.GetType(mapperName);

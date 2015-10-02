@@ -8,7 +8,7 @@ namespace MongoDBExample.Mappers
 {
     public interface IMapper<TEntity, TDBFormat>
     {
-        TDBFormat Mapper(TEntity entity);
-        TEntity Mapper(TDBFormat dbFormat);
+        TDBFormat MapToDbFormat(TEntity entity);
+        TEntity MapToEntity(TDBFormat dbFormat);
     }
 }

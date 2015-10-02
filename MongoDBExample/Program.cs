@@ -22,9 +22,9 @@ namespace MongoDBExample
         static void Main(string[] args)
         {
 
-            var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
-            var sqlServerRepo = new SQLServerRepository<Client>("", null);
-            sqlServerRepo.GetById("5");
+            //var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
+            //var sqlServerRepo = new SQLServerRepository<Client>("", null);
+            //sqlServerRepo.GetById("5");
 
             string databaseName = "test";
             string clientDocument = "client";
@@ -43,8 +43,8 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = GenericBLFactory<Client, string, IList<FilterQuery>>.Create(dbConnection, databaseName, clientDocument);
-            var employeeBL = GenericBLFactory<Employee, string, IList<FilterQuery>>.Create(dbConnection, databaseName, employeeDocument);
+            var clientBL = GenericBLFactory<Client, string, IList<FilterQuery>, BsonDocument>.Create(dbConnection, databaseName, clientDocument);
+            var employeeBL = GenericBLFactory<Employee, string, IList<FilterQuery>, BsonDocument>.Create(dbConnection, databaseName, employeeDocument);
 
             //Creation
             var client = new Client("55554", "Joan");

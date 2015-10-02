@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MongoDBExample.Repository
 {
-    public interface IRepository<TListDBFormat, TFieldId, TListFilterQuery, TEntity>
+    public interface IRepository<TListDBFormat, TFieldId, TListFilterQuery, TDBFormat>
     {
         TListDBFormat GetById(TFieldId id);
         TListDBFormat GetFiltered(TListFilterQuery query);
-        bool Create(TEntity recurse);
+        bool Create(TDBFormat recurse);
     }
 }

@@ -16,20 +16,20 @@ namespace MongoDBExample.Business
 {
     public class GenericBL<TEntity, TDatabase, TListDBFormat, TFieldId, TListFilterQuery, TDBFormat> : IBL<TEntity, TFieldId, TListFilterQuery>
     {
-        private IRepository<TListDBFormat, TFieldId, TListFilterQuery, TEntity> repository;
+        private IRepository<TListDBFormat, TFieldId, TListFilterQuery, TDBFormat> repository;
         private IMapper<TEntity, TDBFormat> mapper;
 
         public GenericBL(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
-            this.repository = RepositoryFactory<TListDBFormat, TFieldId, TListFilterQuery, TEntity, TDatabase>.Create(dbConnection, databaseName, document);
-            this.mapper = MongoMapperFactory<TEntity>.Create();
+            this.repository = RepositoryFactory<TListDBFormat, TFieldId, TListFilterQuery, TEntity, TDatabase, TDBFormat>.Create(dbConnection, databaseName, document);
+            this.mapper = MongoMapperFactory<TEntity, TDBFormat>.Create();
         }
 
         public bool Create(TEntity entity)
         {
             try
             {
-                TDBFormat tDbFormat = this.mapper.Mapper(entity);
+                TDBFormat tDbFormat = this.mapper.MapToDbFormat(entity);
                 return this.repository.Create(tDbFormat);
             }
             catch (Exception ex)
@@ -41,19 +41,20 @@ namespace MongoDBExample.Business
 
         public TEntity GetById(TFieldId id)
         {
-            IEnumerable<BsonDocument> result = (IEnumerable<BsonDocument>)this.repository.GetById(id);
-            var bsonDocument = result.ToList<BsonDocument>().First();
-            return this.mapper.Mapper(bsonDocument);
+            IEnumerable<TDBFormat> result = (IEnumerable<TDBFormat>)this.repository.GetById(id);
+            var bsonDocument = result.ToList<TDBFormat>().First();
+            return this.mapper.MapToEntity(bsonDocument);
         }
 
         public IEnumerable<TEntity> GetFiltered(TListFilterQuery query)
         {
-            var result = (IEnumerable<BsonDocument>)this.repository.GetFiltered(query);
-            IEnumerable<BsonDocument> resultInList = result.ToList();
+            var result = (IEnumerable<TDBFormat>)this.repository.GetFiltered(query);
+            IEnumerable<TDBFormat> resultInList = result.ToList();
             IList<TEntity> entityList = new List<TEntity>();
             foreach (var item in resultInList)
             {
-                entityList.Add(this.mapper.Mapper(item));
+                var tdbFormatItem = item;
+                entityList.Add(this.mapper.MapToEntity(item));
             }
 
             return entityList;
