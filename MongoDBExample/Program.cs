@@ -14,6 +14,7 @@ using MongoDBExample.Mappers;
 using MongoDBExample.Business;
 using Autofac;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace MongoDBExample
 {
@@ -21,10 +22,15 @@ namespace MongoDBExample
     {
         static void Main(string[] args)
         {
+            IDBConnection<SqlConnection> sqlServerConnection = new SQLServerConnection();
+            var sqlServerDatabase = sqlServerConnection.GetDatabase("");
+            var sqlServerMapper = new SQLServerMapper<Client, DataSet>();
 
-            var sqlServerDatabase = new SQLServerConnection().GetDatabase("");
-            var sqlServerRepo = new SQLServerRepository<Client>("", null);
-            sqlServerRepo.GetById("5");
+
+            var sqlClientBL = GenericBLFactory<Client, Guid, IList<FilterQuery>, DataSet, SqlConnection>.Create(sqlServerConnection, "", "", sqlServerMapper);
+            sqlClientBL.GetById(new Guid());
+            //var sqlServerRepo = new SQLServerRepository<Client>("", null);
+            //sqlServerRepo.GetById("5");
 
             string databaseName = "test";
             string clientDocument = "client";
@@ -43,8 +49,10 @@ namespace MongoDBExample
             IMongoDatabase mongoDatabase = dbConnection.GetDatabase(databaseName);
 
             //ClientBL
-            var clientBL = GenericBLFactory<Client, string, IList<FilterQuery>, BsonDocument>.Create(dbConnection, databaseName, clientDocument);
-            var employeeBL = GenericBLFactory<Employee, string, IList<FilterQuery>, BsonDocument>.Create(dbConnection, databaseName, employeeDocument);
+            var clientMongoMapper = new MongoMapper<Client, BsonDocument>();
+            var clientBL = GenericBLFactory<Client, string, IList<FilterQuery>, BsonDocument, IMongoDatabase>.Create(dbConnection, databaseName, clientDocument, clientMongoMapper);
+            var employeeMongoMapper = new MongoMapper<Employee, BsonDocument>();
+            var employeeBL = GenericBLFactory<Employee, string, IList<FilterQuery>, BsonDocument, IMongoDatabase>.Create(dbConnection, databaseName, employeeDocument, employeeMongoMapper);
 
             //Creation
             var client = new Client("55554", "Joan");

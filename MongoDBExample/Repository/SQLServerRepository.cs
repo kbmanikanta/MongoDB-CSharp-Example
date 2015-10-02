@@ -14,18 +14,16 @@ using MongoDBExample.DBConnection;
 
 namespace MongoDBExample.Repository
 {
-    public class SQLServerRepository<TEntity> : IRepository<IEnumerable<DataSet>, string, IList<FilterQuery>, TEntity>
+    public class SQLServerRepository : IRepository<IEnumerable<DataSet>, Guid, IList<FilterQuery>, DataSet>
     {
         private string document;
-        private IMapper<TEntity, BsonDocument> mapper;
 
-        public SQLServerRepository(string document, IMapper<TEntity, BsonDocument> mapper)
+        public SQLServerRepository(string document)
         {
             this.document = document;
-            this.mapper = mapper;
         }
 
-        public IEnumerable<DataSet> GetById(string id)
+        public IEnumerable<DataSet> GetById(Guid id)
         {
             var ds = new DataSet();
             var sqlServerConnection = new SQLServerConnection();
@@ -38,7 +36,7 @@ namespace MongoDBExample.Repository
                 //
                 // The following code uses an SqlCommand based on the SqlConnection.
                 //
-                using (SqlCommand command = new SqlCommand("SELECT TOP 1000 [Id] FROM[ORMTest].[dbo].[ParameterValues]", con))
+                using (SqlCommand command = new SqlCommand("SELECT TOP 1000 [Id],[Value] FROM[ORMTest].[dbo].[ParameterValues]", con))
                 {
                     var adapter = new SqlDataAdapter(command);
                     adapter.Fill(ds);
@@ -54,7 +52,7 @@ namespace MongoDBExample.Repository
             throw new NotImplementedException();
         }
 
-        public bool Create(TEntity recurse)
+        public bool Create(DataSet recurse)
         {
             throw new NotImplementedException();
         }

@@ -19,10 +19,10 @@ namespace MongoDBExample.Business
         private IRepository<TListDBFormat, TFieldId, TListFilterQuery, TDBFormat> repository;
         private IMapper<TEntity, TDBFormat> mapper;
 
-        public GenericBL(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
+        public GenericBL(IDBConnection<TDatabase> dbConnection, string databaseName, string document, IMapper<TEntity, TDBFormat> mapper)
         {
             this.repository = RepositoryFactory<TListDBFormat, TFieldId, TListFilterQuery, TEntity, TDatabase, TDBFormat>.Create(dbConnection, databaseName, document);
-            this.mapper = MongoMapperFactory<TEntity, TDBFormat>.Create();
+            this.mapper = mapper;
         }
 
         public bool Create(TEntity entity)

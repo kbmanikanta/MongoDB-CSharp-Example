@@ -15,9 +15,17 @@ namespace MongoDBExample.Factories
     {
         public static IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> Create(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
-            IMapper<TEntity, TDBFormat> mapper = MongoMapperFactory<TEntity, TDBFormat>.Create();
-            IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> repo = (IRepository < TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat>)new MongoRepository((IMongoDatabase)dbConnection.GetDatabase(databaseName), document);
-            return repo;
+            if (typeof(TDatabase).Equals("IMongoDatabase"))
+            {
+                IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> repo = (IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat>)new MongoRepository((IMongoDatabase)dbConnection.GetDatabase(databaseName), document);
+                return repo;
+            }
+            else
+            {
+                IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> repo = (IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat>)new SQLServerRepository(document);
+                return repo;
+            }
+                     
         }
     }
 }
