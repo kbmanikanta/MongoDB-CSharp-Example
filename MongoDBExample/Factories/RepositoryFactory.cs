@@ -15,7 +15,7 @@ namespace MongoDBExample.Factories
     {
         public static IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> Create(IDBConnection<TDatabase> dbConnection, string databaseName, string document)
         {
-            if (typeof(TDatabase).Equals("IMongoDatabase"))
+            if (typeof(TDatabase).Name.Equals("IMongoDatabase"))
             {
                 IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat> repo = (IRepository<TListDBFormat, TFieldId, TListTFilterQuery, TDBFormat>)new MongoRepository((IMongoDatabase)dbConnection.GetDatabase(databaseName), document);
                 return repo;
